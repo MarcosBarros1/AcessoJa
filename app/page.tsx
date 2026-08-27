@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
+import Link from 'next/link'; // 🌟 IMPORTAÇÃO NOVA ADICIONADA AQUI
 
 export default function Home() {
   const [altoContraste, setAltoContraste] = useState(false);
@@ -19,7 +20,6 @@ export default function Home() {
   };
 
   // 🌟 NOSSO BANCO DE DADOS FALSO (Mock)
-  // Para adicionar mais cursos, é só colocar mais itens nessa lista!
   const cursos = [
     {
       id: 1,
@@ -95,7 +95,7 @@ export default function Home() {
       </header>
 
       <main id="conteudo-principal">
-        {/* Área de Destaque (Hero) com gradiente bonitão */}
+        {/* Área de Destaque (Hero) */}
         <section className={`py-20 px-6 text-center ${altoContraste ? 'bg-black border-b-4 border-yellow-300' : 'bg-gradient-to-br from-blue-800 via-blue-700 to-indigo-900 text-white shadow-inner'}`}>
           <div className="max-w-4xl mx-auto">
             <h2 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-md">
@@ -104,9 +104,18 @@ export default function Home() {
             <p className={`text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed ${altoContraste ? 'text-yellow-300' : 'text-blue-100'}`}>
               Descubra cursos gratuitos de tecnologia adaptados para o seu desenvolvimento profissional.
             </p>
-            <a href="#cursos" className={`inline-block font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:-translate-y-1 transition-all focus:ring-4 focus:ring-orange-500 ${altoContraste ? 'bg-yellow-300 text-black' : 'bg-white text-blue-900 hover:bg-blue-50'}`}>
-              Explorar Cursos ↓
-            </a>
+            
+            {/* 🌟 BOTÕES ATUALIZADOS AQUI */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="#cursos" className={`w-full sm:w-auto inline-block font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:-translate-y-1 transition-all focus:ring-4 focus:ring-orange-500 ${altoContraste ? 'bg-yellow-300 text-black' : 'bg-white text-blue-900 hover:bg-blue-50'}`}>
+                Explorar Cursos ↓
+              </a>
+              
+              <Link href="/cadastro" className={`w-full sm:w-auto inline-block font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:-translate-y-1 transition-all focus:ring-4 focus:ring-orange-500 border-2 ${altoContraste ? 'border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-black' : 'border-white text-white hover:bg-white/20'}`}>
+                + Cadastrar Novo Curso
+              </Link>
+            </div>
+
           </div>
         </section>
 
@@ -115,8 +124,6 @@ export default function Home() {
           <h3 className="text-3xl font-black mb-10 text-center uppercase tracking-wider">Cursos Disponíveis</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            {/* O React vai mapear a lista e gerar um card para cada curso automaticamente */}
             {cursos.map((curso) => (
               <article key={curso.id} className={`flex flex-col p-8 rounded-2xl border-2 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ${altoContraste ? 'border-yellow-300 bg-black' : 'border-slate-200 bg-white'}`}>
                 
@@ -137,7 +144,6 @@ export default function Home() {
                 </a>
               </article>
             ))}
-
           </div>
         </section>
       </main>
