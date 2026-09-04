@@ -6,13 +6,13 @@ import Link from 'next/link';
 import { MonitorPlay, Palette, Accessibility, Languages, Briefcase, Lightbulb, Search, Trash2, Lock, Unlock, CheckCircle, X, Mic, Pencil, Save } from 'lucide-react';
 
 const cursosPadrao = [
-  { id: 1, tag: 'Tecnologia', titulo: 'HTML e CSS Inclusivo', descricao: 'Aprenda a construir sites do zero focando nas diretrizes de acessibilidade (WCAG).', link: 'https://youtube.com', icone: 'MonitorPlay' },
-  { id: 2, tag: 'Tecnologia', titulo: 'Lógica com Python', descricao: 'Dê os primeiros passos na programação com uma linguagem simples, poderosa e muito requisitada.', link: 'https://youtube.com', icone: 'MonitorPlay' },
-  { id: 3, tag: 'Design', titulo: 'UX/UI Design para Todos', descricao: 'Entenda como projetar interfaces amigáveis e empáticas para todos os perfis de usuários.', link: 'https://youtube.com', icone: 'Palette' },
-  { id: 4, tag: 'Tecnologia', titulo: 'JavaScript Dinâmico', descricao: 'Crie interações, valide formulários e deixe suas páginas web vivas com JS.', link: 'https://youtube.com', icone: 'MonitorPlay' },
-  { id: 5, tag: 'Acessibilidade', titulo: 'Dominando Leitores de Tela', descricao: 'Testes práticos usando NVDA e VoiceOver para garantir que seu site é 100% navegável por cegos.', link: 'https://youtube.com', icone: 'Accessibility' },
-  { id: 6, tag: 'Carreira', titulo: 'Preparação para Entrevistas de TI', descricao: 'Dicas de currículo, portfólio no GitHub e como se destacar nas seleções de tecnologia.', link: 'https://youtube.com', icone: 'Briefcase' },
-  { id: 7, tag: 'Idiomas', titulo: 'Libras Básico', descricao: 'Aprenda os sinais básicos da Língua Brasileira de Sinais para comunicação no dia a dia.', link: 'https://youtube.com', icone: 'Languages' }
+  { id: 1, tag: 'Tecnologia', titulo: 'HTML e CSS Inclusivo', descricao: 'Aprenda a construir sites do zero focando nas diretrizes de acessibilidade (WCAG).', link: 'https://www.youtube.com/watch?v=kMhE_cM4_Eo', icone: 'MonitorPlay' },
+  { id: 2, tag: 'Tecnologia', titulo: 'Lógica com Python', descricao: 'Dê os primeiros passos na programação com uma linguagem simples, poderosa e muito requisitada.', link: 'https://www.youtube.com/watch?v=S9uPNppGsGo', icone: 'MonitorPlay' },
+  { id: 3, tag: 'Design', titulo: 'UX/UI Design para Todos', descricao: 'Entenda como projetar interfaces amigáveis e empáticas para todos os perfis de usuários.', link: 'https://www.youtube.com/watch?v=wnLzGjS6Xik', icone: 'Palette' },
+  { id: 4, tag: 'Tecnologia', titulo: 'JavaScript Dinâmico', descricao: 'Crie interações, valide formulários e deixe suas páginas web vivas com JS.', link: 'https://www.youtube.com/watch?v=BXqUH86F-kA', icone: 'MonitorPlay' },
+  { id: 5, tag: 'Acessibilidade', titulo: 'Dominando Leitores de Tela', descricao: 'Testes práticos usando NVDA e VoiceOver para garantir que seu site é 100% navegável por cegos.', link: 'https://www.youtube.com/watch?v=v0I8Eic4c_g', icone: 'Accessibility' },
+  { id: 6, tag: 'Carreira', titulo: 'Preparação para Entrevistas de TI', descricao: 'Dicas de currículo, portfólio no GitHub e como se destacar nas seleções de tecnologia.', link: 'https://www.youtube.com/watch?v=T1-HhFhR41M', icone: 'Briefcase' },
+  { id: 7, tag: 'Idiomas', titulo: 'Libras Básico', descricao: 'Aprenda os sinais básicos da Língua Brasileira de Sinais para comunicação no dia a dia.', link: 'https://www.youtube.com/watch?v=4T1T2W7OEEU', icone: 'Languages' }
 ];
 
 const RenderizadorDeIcone = ({ nomeIcone, altoContraste }: { nomeIcone: string, altoContraste: boolean }) => {
@@ -45,6 +45,12 @@ export default function Home() {
   // 🌟 ESTADOS DA PESQUISA POR VOZ E EDIÇÃO
   const [isListening, setIsListening] = useState(false);
   const [cursoEmEdicao, setCursoEmEdicao] = useState<any | null>(null);
+
+  // 🌟 Efeito para alterar a fonte na raiz do documento (HTML) para o Tailwind calcular os rems corretamente
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${tamanhoFonte}px`;
+    return () => { document.documentElement.style.fontSize = '16px'; };
+  }, [tamanhoFonte]);
 
   useEffect(() => {
     const salvoContraste = localStorage.getItem('alto-contraste');
@@ -108,7 +114,7 @@ export default function Home() {
   // 🌟 FUNÇÃO DE PESQUISA POR VOZ (MICROFONE)
   const iniciarPesquisaPorVoz = () => {
     // Verifica se o navegador tem suporte à API de voz
-    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     
     if (!SpeechRecognition) {
       alert("Seu navegador não suporta pesquisa por voz. Tente usar o Google Chrome.");
@@ -153,12 +159,10 @@ export default function Home() {
 
   const fazerLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (senhaAdmin === 'admin123') {
+    if (senhaAdmin === 'Ace$$oJa2026') {
       setIsAdmin(true);
       fecharModalLogin();
       mostrarToast('Login de administrador realizado com sucesso!');
-    } else {
-      setErroLogin('Senha incorreta. Dica: a senha é admin123');
     }
   };
 
@@ -173,7 +177,8 @@ export default function Home() {
   if (cursos.length === 0) return null; 
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 relative pb-20 ${altoContraste ? 'bg-black text-yellow-300' : 'bg-slate-50 text-slate-800'}`} style={{ fontSize: `${tamanhoFonte}px` }}>
+    // 🌟 AQUI: Removido o style={{fontSize}} para que o useEffect faça o trabalho corretamente
+    <div className={`min-h-screen transition-colors duration-300 relative pb-20 ${altoContraste ? 'bg-black text-yellow-300' : 'bg-slate-50 text-slate-800'}`}>
       
       {/* Notificação Toast */}
       {toast && (
